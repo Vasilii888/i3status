@@ -1,6 +1,6 @@
-# i3status
+# i3status GPU nvidia
 
-Скрипт для вывода температуры и загруженности GPU nvidia (проприетарные драйвера).
+Скрипт для вывода температуры и загруженности GPU nvidia (проприетарные драйвера) протестированно на GeForce GTX 1650.
 
 ![изображение](https://user-images.githubusercontent.com/132225093/235370921-fd7b70c2-5e23-4ef5-a133-4fd7b564f9e7.png)
 
