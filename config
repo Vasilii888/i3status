@@ -1,0 +1,135 @@
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+        colors = true
+		color_good = "#FF8C00"
+		color_degraded = "#FFFF00"
+		color_bad = "#FF0000"
+        interval = 5
+	output_format = "i3bar"
+}
+order += "read_file util"
+order += "read_file temp"
+order += "read_file mem"
+order += "cpu_usage"
+order += "cpu_temperature 0"
+order += "load"
+order += "memory"
+order += "disk /"
+order += "cpu_temperature 1"
+order += "cpu_temperature 2"
+order += "volume master"
+order += "time"
+
+cpu_temperature 2 {
+    format = "%degrees °C"
+    # верхний порог температуры, при достижении которого
+    # вывод окрасится красным,
+    # и формат изменится на format_above_threshold
+    max_threshold = "85"
+    format_above_threshold = "%degrees °C"
+    path = "/sys/module/nvme/drivers/pci:nvme/0000:03:00.0/nvme/nvme0/hwmon1/temp2_input"
+}
+
+cpu_temperature 1 {
+    format = "%degrees °C"
+    # верхний порог температуры, при достижении которого
+    # вывод окрасится красным,
+    # и формат изменится на format_above_threshold
+    max_threshold = "70"
+    format_above_threshold = "%degrees °C"
+    path = "/sys/module/nvme/drivers/pci:nvme/0000:03:00.0/nvme/nvme0/hwmon1/temp1_input"
+}
+
+read_file mem {
+	format = "%content GiB/4.00 GiB"
+	format_bad ="4: %error"
+	path = /home/vasilii/.config/i3status/gpu_t/mem
+}
+
+read_file util {
+	format = "GPU%content"
+	format_bad ="GPU 100: %error"
+	path = /home/vasilii/.config/i3status/gpu_t/util
+}
+
+read_file temp {
+	format = "%content °C"
+	format_bad ="90: %error"
+	path = /home/vasilii/.config/i3status/gpu_t/temp
+}
+
+time {
+	format = " %a-%d-%b 🕓 %H:%M"
+}
+
+volume master {
+        format = "🔊 %volume"
+        format_muted = " Звук выкл."
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
+}
+
+disk "/" {
+    # доступные переменные:
+    # %used, %percentage_used - занятое пространство
+    # %free, %percentage_free - свободное пространство
+    # %avail, %percentage_avail - доступное пространство
+    # %total - всего
+    format = "  %percentage_used"
+    # будет окрашен в "color_bad" (по умолчанию красный)
+    # при достижении нижнего порога менее 10GB доступного пространства
+    low_threshold = "10"
+    threshold_type = "gbytes_avail"
+    format_below_threshold = " Warning: %percentage_used "
+}
+
+memory {
+    # доступные переменные:
+    # %total, percentage_total
+    # %used, percentage_used
+    # %free, percentage_free
+    # %available, percentage_available
+    # %shared, percentage_shared
+    format = " %used/%total"
+    # порог, при котором вывод окрасится в
+    # желтый (degraded) или красный (critical)
+    # а формат вывода изменится на format_degraded
+    threshold_degraded = "1G"
+    threshold_critical = "200M"
+    format_degraded = " < %available"
+}
+
+cpu_usage {
+    # %usage - процентное использование ЦП
+    # %cpu<N> - начиная с %cpu0 и далее показывает использование ядер
+    format = " %usage"
+    # доступны параметры:
+     degraded_threshold = 80
+     max_threshold = 95
+    # и кастомные форматы для них
+    # format_above_degraded_threshold и format_above_threshold
+}
+
+load {
+	format = " %1min %15min"
+	 max_threshold = 12
+	 format_above_threshold =" %1min %15min"
+}
+
+cpu_temperature 0 {
+    format = "%degrees °C"
+    # верхний порог температуры, при достижении которого
+    # вывод окрасится красным,
+    # и формат изменится на format_above_threshold
+    max_threshold = "80"
+    format_above_threshold = "%degrees °C"
+    path = "/sys/class/thermal/thermal_zone1/temp"
+}
