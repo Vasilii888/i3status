@@ -1,4 +1,4 @@
-# i3status GPU nvidia
+# GPU nvidia for i3status (memory, util, temperature)
 
 Скрипт для вывода температуры, памяти и загруженности GPU nvidia (проприетарные драйвера) протестировано на GeForce GTX 1650 и GTX 650 Ti.
 
